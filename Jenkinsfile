@@ -14,17 +14,29 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
-        stage('Build Docker Image') {
+        stage('Build Docker Image tes') {
             when {
                 branch 'master'
             }
             steps {
-                script {
+                container('docker') {
+                    echo "Building docker image"                    
+                    //sh "docker build -t halilintar8/demo-pipeline:latest ."
+                    script {
+                        app = docker.build(DOCKER_IMAGE_NAME)
+                        app.inside {
+                            sh 'echo Hello, World!'
+                        }
+                    }
+                    
+                }
+
+                /*script {
                     app = docker.build(DOCKER_IMAGE_NAME)
                     app.inside {
                         sh 'echo Hello, World!'
                     }
-                }
+                }*/
             }
         }
         stage('Push Docker Image') {
@@ -39,7 +51,7 @@ pipeline {
                         //app.push("${env.BUILD_NUMBER}")
                         app.push("${env.DOCKER_IMAGE_NAME}")
                         app.push("latest")
-                        ///sh "docker tag ${ORIGIN_REPO}/${REPO} ${ORIGIN_REPO}/${REPO}:${IMAGE_TAG}"
+                        //sh "docker tag ${ORIGIN_REPO}/${REPO} ${ORIGIN_REPO}/${REPO}:${IMAGE_TAG}"
                         //sh "docker push ${ORIGIN_REPO}/${REPO}:${IMAGE_TAG}"                        
                       }
                     }
