@@ -14,22 +14,12 @@ pipeline {
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
-        stage('Build Docker Image tes') {
-            /*when {
-                branch 'master'
-            }*/
+        stage('Build Docker Image tes') { 
             steps {
                 container('docker') {
                     echo "Building docker image"                    
-                    sh "docker build -t halilintar8/demo-pipeline:latest ."                    
+                    sh "docker build -t halilintar8/train-schedule:latest ."                    
                 }
-
-                /*script {
-                    app = docker.build(DOCKER_IMAGE_NAME)
-                    app.inside {
-                        sh 'echo Hello, World!'
-                    }
-                }*/
             }
         }
         stage('Push Docker Image') {
