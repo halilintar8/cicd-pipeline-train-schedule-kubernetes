@@ -19,12 +19,24 @@ pipeline {
                 branch 'master'
             }
             steps {
-                script {
+                container('docker') {
+                    //echo "Building docker image"                    
+                    //sh "docker build -t halilintar8/demo-pipeline:latest ."
+                    script {
+                        app = docker.build(DOCKER_IMAGE_NAME)
+                        app.inside {
+                            sh 'echo Hello, World!'
+                        }
+                    }
+                    
+                }
+
+                /*script {
                     app = docker.build(DOCKER_IMAGE_NAME)
                     app.inside {
                         sh 'echo Hello, World!'
                     }
-                }
+                }*/
             }
         }
         stage('Push Docker Image') {
