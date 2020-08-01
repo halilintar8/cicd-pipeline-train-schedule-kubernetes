@@ -39,7 +39,7 @@ pipeline {
                         //app.push("${env.BUILD_NUMBER}")
                         app.push("${env.DOCKER_IMAGE_NAME}")
                         app.push("latest")
-                        //sh "docker tag ${ORIGIN_REPO}/${REPO} ${ORIGIN_REPO}/${REPO}:${IMAGE_TAG}"
+                        ///sh "docker tag ${ORIGIN_REPO}/${REPO} ${ORIGIN_REPO}/${REPO}:${IMAGE_TAG}"
                         //sh "docker push ${ORIGIN_REPO}/${REPO}:${IMAGE_TAG}"                        
                       }
                     }
