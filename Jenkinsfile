@@ -53,9 +53,40 @@ pipeline {
                 }
             }
         }
-  
-        stage('Deploy to Kubernetes') {
+
+        /*stage('DeployToProduction') {
+            when {
+                branch 'master'
+            }
             steps {
+                input 'Deploy to Production?'
+                milestone(1)
+                //implement Kubernetes deployment here
+            }
+        }*/
+
+        /*stage('DeployToProduction') {
+            when {
+                branch 'master'
+            }
+            steps {
+                input 'Deploy to Production?'
+                milestone(1)
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'train-schedule-kube.yml',
+                    enableConfigSubstitution: true
+                )
+            }
+        }*/
+        
+        stage('Deploy to Kubernetes') {
+                when {
+                branch 'master'
+            }
+            steps {
+                input 'Deploy to Production?'
+                milestone(1)
                 container('kubectl') {
                     echo "Deploy to Kubernetes Cluster"
                     script {
