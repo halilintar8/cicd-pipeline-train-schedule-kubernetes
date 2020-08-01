@@ -15,9 +15,9 @@ pipeline {
             }
         }
         stage('Build Docker Image tes') {
-            when {
+            /*when {
                 branch 'master'
-            }
+            }*/
             steps {
                 container('docker') {
                     echo "Building docker image"                    
