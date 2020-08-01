@@ -31,13 +31,28 @@ pipeline {
                 branch 'master'
             }
             steps {
-                script {
-                    //docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
-                    docker.withRegistry('', 'hub_docker_halilintar8') {
+                container('docker') {
+                  echo "Push docker image to hub.docker.com"
+                    script {                      
+                      docker.withRegistry('', 'hub_docker_halilintar8') {
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
+                        //sh "docker tag ${ORIGIN_REPO}/${REPO} ${ORIGIN_REPO}/${REPO}:${IMAGE_TAG}"
+                        //sh "docker push ${ORIGIN_REPO}/${REPO}:${IMAGE_TAG}"                        
+                      }
                     }
                 }
+
+                //script {
+                    //docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
+                    //docker.withRegistry('', 'hub_docker_halilintar8') {
+
+                        //app.push("${env.BUILD_NUMBER}")
+                        //app.push("latest")
+
+                    //}
+                //}
+
             }
         }
         /*stage('DeployToProduction') {
@@ -50,7 +65,7 @@ pipeline {
                 //implement Kubernetes deployment here
             }
         }*/
-         stage('DeployToProduction') {
+        stage('DeployToProduction') {
             when {
                 branch 'master'
             }
