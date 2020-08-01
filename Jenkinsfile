@@ -4,6 +4,7 @@ pipeline {
         //be sure to replace "willbla" with your own Docker Hub username
         //DOCKER_IMAGE_NAME = "willbla/train-schedule"
         DOCKER_IMAGE_NAME = "halilintar8/train-schedule"
+        IMAGE_TAG = "latest"
         //BUILD_NUMBER = "0.0.1"
     }
 
@@ -26,7 +27,7 @@ pipeline {
                 container('docker') {
                     echo "Building docker image"
                     //myapp = docker.build("halilintar8/hello:latest")   
-                    sh "docker build -t halilintar8/train-schedule:latest ."
+                    sh "docker build -t ${DOCKER_IMAGE_NAME} ."
                     //sh "docker build -t $tag -f jenkins-docker/Dockerfile ."
                 }
             }          
@@ -41,24 +42,15 @@ pipeline {
                     script {                      
                       docker.withRegistry('', 'hub_docker_halilintar8') {
                         //app.push("${env.BUILD_NUMBER}")
-                        app.push("${env.DOCKER_IMAGE_NAME}")
-                        app.push("latest")
-                        //sh "docker tag ${ORIGIN_REPO}/${REPO} ${ORIGIN_REPO}/${REPO}:${IMAGE_TAG}"
-                        //sh "docker push ${ORIGIN_REPO}/${REPO}:${IMAGE_TAG}"                        
+                        
+                        //app.push("${env.DOCKER_IMAGE_NAME}")
+                        //app.push("latest")
+
+                        sh "docker tag ${DOCKER_IMAGE_NAME} ${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
+                        sh "docker push ${DOCKER_IMAGE_NAME}:${IMAGE_TAG}"
                       }
                     }
                 }
-
-                //script {
-                    //docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
-                    //docker.withRegistry('', 'hub_docker_halilintar8') {
-
-                        //app.push("${env.BUILD_NUMBER}")
-                        //app.push("latest")
-
-                    //}
-                //}
-
             }
         }
         /*stage('DeployToProduction') {
