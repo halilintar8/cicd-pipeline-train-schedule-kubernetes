@@ -25,10 +25,8 @@ pipeline {
         stage('Docker Build Image') {
             steps{
                 container('docker') {
-                    echo "Building docker image"
-                    //myapp = docker.build("halilintar8/hello:latest")   
-                    sh "docker build -t ${DOCKER_IMAGE_NAME} ."
-                    //sh "docker build -t $tag -f jenkins-docker/Dockerfile ."
+                    echo "Building docker image"                    
+                    sh "docker build -t ${DOCKER_IMAGE_NAME} ."                    
                 }
             }          
         }
