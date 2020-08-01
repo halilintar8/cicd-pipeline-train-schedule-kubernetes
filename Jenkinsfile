@@ -6,6 +6,13 @@ pipeline {
         DOCKER_IMAGE_NAME = "halilintar8/train-schedule"
         //BUILD_NUMBER = "0.0.1"
     }
+
+    agent{
+        node{
+          label 'slave-pipeline'
+        }
+      }
+
     stages {
         stage('Build') {
             steps {
