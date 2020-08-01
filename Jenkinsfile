@@ -53,44 +53,16 @@ pipeline {
                 }
             }
         }
-        /*stage('DeployToProduction') {
-            when {
-                branch 'master'
-            }
-            steps {
-                input 'Deploy to Production?'
-                milestone(1)
-                //implement Kubernetes deployment here
-            }
-        }*/
-
-        /*stage('DeployToProduction') {
-            when {
-                branch 'master'
-            }
-            steps {
-                input 'Deploy to Production?'
-                milestone(1)
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'train-schedule-kube.yml',
-                    enableConfigSubstitution: true
-                )
-            }
-        }*/
-
+  
         stage('Deploy to Kubernetes') {
-          steps {
-            container('kubectl') {
-              echo "Deploy to Kubernetes Cluster"
-                script {
-                  step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: 'https://10.8.1.120:6443', credentialsId:'k8sCertAuth', config: 'train-schedule-kube.yml',variableState: 'DOCKER_IMAGE_NAME,IMAGE_TAG'])
-                }                
+            steps {
+                container('kubectl') {
+                    echo "Deploy to Kubernetes Cluster"
+                    script {
+                        step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: 'https://10.8.1.120:6443', credentialsId:'k8sCertAuth', config: 'train-schedule-kube.yml',variableState: 'DOCKER_IMAGE_NAME,IMAGE_TAG'])
+                    }
+                }
             }
-          }
         }
-
-      }
     }
-       
 }
