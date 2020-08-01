@@ -15,14 +15,14 @@ pipeline {
             }
         }
         stage('Docker Build Image') {
-          steps{
+            steps{
                 container('docker') {
                     echo "Building docker image"
                     //myapp = docker.build("halilintar8/hello:latest")   
                     sh "docker build -t halilintar8/train-schedule:latest ."
                     //sh "docker build -t $tag -f jenkins-docker/Dockerfile ."
                 }
-          }          
+            }          
         }
         stage('Push Docker Image') {
             when {
