@@ -49,8 +49,7 @@ pipeline {
                 //implement Kubernetes deployment here
             }
         }*/
-    }
-        stage('DeployToProduction') {
+         stage('DeployToProduction') {
             when {
                 branch 'master'
             }
@@ -64,4 +63,6 @@ pipeline {
                 )
             }
         }
+    }
+       
 }
