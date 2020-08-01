@@ -63,7 +63,8 @@ pipeline {
                 //implement Kubernetes deployment here
             }
         }*/
-        stage('DeployToProduction') {
+
+        /*stage('DeployToProduction') {
             when {
                 branch 'master'
             }
@@ -76,7 +77,20 @@ pipeline {
                     enableConfigSubstitution: true
                 )
             }
+        }*/
+
+        stage('Deploy to Kubernetes') {
+          steps {
+            container('kubectl') {
+              echo "Deploy to Kubernetes Cluster"
+                script {
+                  step([$class: 'KubernetesDeploy', authMethod: 'certs', apiServerUrl: 'https://10.8.1.120:6443', credentialsId:'k8sCertAuth', config: 'train-schedule-kube.yml',variableState: 'DOCKER_IMAGE_NAME,IMAGE_TAG'])
+                }                
+            }
+          }
         }
+
+      }
     }
        
 }
