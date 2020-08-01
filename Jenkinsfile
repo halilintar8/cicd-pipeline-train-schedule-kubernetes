@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    //agent any
     environment {
         //be sure to replace "willbla" with your own Docker Hub username
         //DOCKER_IMAGE_NAME = "willbla/train-schedule"
@@ -11,7 +11,7 @@ pipeline {
         node{
           label 'slave-pipeline'
         }
-      }
+    }
 
     stages {
         stage('Build') {
