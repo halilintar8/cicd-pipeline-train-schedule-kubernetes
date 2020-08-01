@@ -4,6 +4,7 @@ pipeline {
         //be sure to replace "willbla" with your own Docker Hub username
         //DOCKER_IMAGE_NAME = "willbla/train-schedule"
         DOCKER_IMAGE_NAME = "halilintar8/train-schedule"
+        //BUILD_NUMBER = "0.0.1"
     }
     stages {
         stage('Build') {
@@ -35,7 +36,8 @@ pipeline {
                   echo "Push docker image to hub.docker.com"
                     script {                      
                       docker.withRegistry('', 'hub_docker_halilintar8') {
-                        app.push("${env.BUILD_NUMBER}")
+                        //app.push("${env.BUILD_NUMBER}")
+                        app.push("${env.DOCKER_IMAGE_NAME}")
                         app.push("latest")
                         //sh "docker tag ${ORIGIN_REPO}/${REPO} ${ORIGIN_REPO}/${REPO}:${IMAGE_TAG}"
                         //sh "docker push ${ORIGIN_REPO}/${REPO}:${IMAGE_TAG}"                        
